@@ -9,7 +9,9 @@ public class Routes {
 
     public static void initRoutes(Service http) {
         http.path("/ocrselector", () -> {
-            http.get("/dd", Handlers.getDigitalDoc, gson::toJson);
+            http.get("/:processid/dd", Handlers.getDigitalDoc, gson::toJson);
+            http.post("/:processid/results", Handlers.saveResults);
+            http.get("/:processid/saved", Handlers.getSavedData, gson::toJson);
         });
     }
 

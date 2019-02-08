@@ -29,7 +29,7 @@ public class OcrSelector implements IRestGuiPlugin {
 
     @Override
     public void extractAssets(Path assetsDir) {
-        String[] paths = new String[] { "css/style.css", "js/app.js", "js/riot.min.js", "js/tags.js" };
+        String[] paths = new String[] { "css/style.css", "js/app.js", "js/riot.min.js", "js/tags.js", "js/ugh.js" };
         for (String p : paths) {
             extractFile(p, assetsDir);
         }
@@ -97,7 +97,7 @@ public class OcrSelector implements IRestGuiPlugin {
 
     @Override
     public String[] getJsPaths() {
-        return new String[] { "js/riot.min.js", "js/tags.js", "js/app.js" };
+        return new String[] { "js/riot.min.js", "js/tags.js", "js/app.js", "js/ugh.js" };
     }
 
     @Override
