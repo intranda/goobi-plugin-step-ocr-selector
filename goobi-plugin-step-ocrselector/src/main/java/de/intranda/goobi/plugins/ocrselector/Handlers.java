@@ -36,9 +36,7 @@ public class Handlers {
     };
     static Route saveResults = (req, res) -> {
         Process p = ProcessManager.getProcessById(Integer.parseInt(req.params("processid")));
-        Path ocrDir = Paths.get(p.getOcrDirectory());
-        Files.createDirectories(ocrDir);
-        Files.copy(req.raw().getInputStream(), ocrDir.resolve("ocrPages.json"), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(req.raw().getInputStream(), Paths.get(p.getProcessDataDirectory()).resolve("ocrPages.json"), StandardCopyOption.REPLACE_EXISTING);
         return "ok";
     };
     public static Route getSavedData = (req, res) -> {
@@ -51,7 +49,7 @@ public class Handlers {
         }
         SavedData data = new SavedData();
         data.setDefaultValue(defaultValue);
-        Path savedFile = Paths.get(p.getOcrDirectory()).resolve("ocrPages.json");
+        Path savedFile = Paths.get(p.getProcessDataDirectory()).resolve("ocrPages.json");
         if (Files.exists(savedFile)) {
             try (InputStream in = Files.newInputStream(savedFile); InputStreamReader json = new InputStreamReader(in)) {
                 Map<String, String> savedData = gson.fromJson(json, mapType);
