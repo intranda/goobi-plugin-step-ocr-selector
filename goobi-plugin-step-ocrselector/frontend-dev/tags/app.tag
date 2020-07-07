@@ -44,8 +44,8 @@
 		}
 		this.menuObserver = new Observer();
 		this.images = [];
-		this.imageMap = {}
-		this.menuItems = ["antiqua", "fraktur", "keine OCR"] 
+		this.imageMap = {};
+		this.menuItems = ["antiqua", "fraktur", "keine OCR"];
 		
 		this.on("mount", () => {
 		    $.ajax( {
