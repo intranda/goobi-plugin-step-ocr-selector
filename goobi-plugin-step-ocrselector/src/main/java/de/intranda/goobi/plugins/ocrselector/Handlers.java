@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
+import org.goobi.beans.Masterpiece;
+import org.goobi.beans.Masterpieceproperty;
 import org.goobi.beans.Process;
 import org.goobi.beans.Processproperty;
 
@@ -43,8 +45,17 @@ public class Handlers {
         Process p = ProcessManager.getProcessById(Integer.parseInt(req.params("processid")));
         String defaultValue = null;
         for (Processproperty prop : p.getEigenschaften()) {
-            if (prop.getTitel().equals("Schrifttyp")) {
+            if (prop.getTitel().equalsIgnoreCase("schrifttyp")) {
                 defaultValue = prop.getWert();
+            }
+        }
+        if (defaultValue == null) {
+            for (Masterpiece masterpiece : p.getWerkstuecke()) {
+                for (Masterpieceproperty property : masterpiece.getEigenschaften()) {
+                    if (property.getTitel().equalsIgnoreCase("schrifttyp")) {
+                        defaultValue = property.getWert();
+                    }
+                }
             }
         }
         SavedData data = new SavedData();
