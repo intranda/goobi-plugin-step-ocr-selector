@@ -43,8 +43,7 @@
     	
     	getImageName(location) {
     	    let lastSlash = Math.max(location.lastIndexOf("/"), location.lastIndexOf("\\"));
-    	    let lastDot = location.lastIndexOf(".");
-    	    return location.substring(lastSlash+1, lastDot);
+    	    return location.substring(lastSlash+1);
     	}
     	
     	getImageUrl(location, width, height) {
