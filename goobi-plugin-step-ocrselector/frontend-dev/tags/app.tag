@@ -282,7 +282,7 @@
     	getImageUrl(location, width, height) {
     	    let imageName = this.getImageName(location);
     	    let processId = this.generalOpts.processId;
-    	    return `/goobi/api/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
+    	    return `/goobi/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
     	}
 	</script>
 </app>

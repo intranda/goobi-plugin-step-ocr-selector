@@ -30,7 +30,7 @@
     	fetchDimensions() {
     	    let imageName = this.getImageName(this.opts.metsimage.location);
     	    let processId = this.opts.processid;
-    	    let url = `/goobi/api/image/${processId}/media/${imageName}/info.json`;
+    	    let url = `/goobi/api/process/image/${processId}/media/${imageName}/info.json`;
     	    fetch(url).then(resp => {
     	        resp.json().then(json => {
     	            var ratio = json.width / json.height;
@@ -49,7 +49,7 @@
     	getImageUrl(location, width, height) {
     	    let imageName = this.getImageName(location);
     	    let processId = this.opts.processid;
-    	    return `/goobi/api/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
+    	    return `/goobi/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
     	}
     	
     	createObserver() {

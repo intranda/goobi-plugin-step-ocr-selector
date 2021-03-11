@@ -5,8 +5,8 @@ riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/
 		}
 		this.menuObserver = new Observer();
 		this.images = [];
-		this.imageMap = {}
-		this.menuItems = ["antiqua", "fraktur", "keine OCR"]
+		this.imageMap = {};
+		this.menuItems = ["antiqua", "fraktur", "keine OCR"];
 
 		this.on("mount", () => {
 		    $.ajax( {
@@ -243,7 +243,7 @@ riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/
     	this.getImageUrl = function(location, width, height) {
     	    let imageName = this.getImageName(location);
     	    let processId = this.generalOpts.processId;
-    	    return `/goobi/api/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
+    	    return `/goobi/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
     	}.bind(this)
 });
 riot.tag2('circular-menu', '<div class="pie-container" riot-style="top: {opts.top}px; left: {opts.left}px" onwheel="{rotate}"><ul class="pie"><li class="slice {highlight == option ? \'active\' : \'\'} {option.dummy ? \'dummy\' : \'\'} {option.type}" each="{lines}" riot-style="transform: rotate({deg}deg) skew(-{skew}deg);" onmouseover="{mouseover}" onclick="{mouseClick}" oncontextmenu="{onContext}"><a class="slice-contents" riot-style="transform: skew({skew}deg) rotate({unrotate}deg);"><span if="{!option.dummy}">{option}</span></a></li><div each="{lines}" class="line {hidden ? \'hidden\' : \'\'} {option.dummy ? \'dummy\' : \'\'} {highlight == option ? \'active\' : \'\'}" riot-style="transform: rotate({deg}deg);"></div></ul></div>', 'circular-menu .pie-highlight,[data-is="circular-menu"] .pie-highlight{ position: fixed; width: 400px; text-align: center; z-index: 50; user-select: none; } circular-menu .pie-highlight span,[data-is="circular-menu"] .pie-highlight span{ background-color: rgba(54, 142, 224, 1); color: white; padding: 8px; font-size: 16px; border-radius: 5px; } circular-menu .pie-container,[data-is="circular-menu"] .pie-container{ position: fixed; z-index: 50; } circular-menu .pie,[data-is="circular-menu"] .pie{ position: relative; padding: 0; width: 400px; height: 400px; border-radius: 50%; border: solid 1px rgba(186,183,180,0.5); } circular-menu .line,[data-is="circular-menu"] .line{ position: absolute; height: 1px; width: 50%; top: 50%; left: 50%; transform-origin: 0% 50%; background-color: rgb(54, 142, 224); } circular-menu .line.hidden,[data-is="circular-menu"] .line.hidden{ display: none; } circular-menu .line.dummy,[data-is="circular-menu"] .line.dummy{ background-color: rgba(150, 150, 150, 1); } circular-menu .slice,[data-is="circular-menu"] .slice{ overflow: hidden; position: absolute; top: 0; right: 0; width: 50%; height: 50%; transform-origin: 0% 100%; } circular-menu .slice a,[data-is="circular-menu"] .slice a{ font-size: 16px; color: #fff; } circular-menu .slice-contents,[data-is="circular-menu"] .slice-contents{ text-align: center; position: absolute; left: -100%; width: 200%; height: 200%; border-radius: 50%; background-color: rgba(54, 142, 224, 0.75); } circular-menu .slice-contents span,[data-is="circular-menu"] .slice-contents span{ position: relative; display: inline-block; padding-top: 12px; font-weight: bold; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } circular-menu .slice.remove .slice-contents,[data-is="circular-menu"] .slice.remove .slice-contents{ background-color: rgba(255, 68, 51, 0.75); } circular-menu .slice.remove.active .slice-contents,[data-is="circular-menu"] .slice.remove.active .slice-contents{ background-color: rgb(255, 68, 51); } circular-menu .slice.active .slice-contents,[data-is="circular-menu"] .slice.active .slice-contents{ background-color: rgb(54, 142, 224); } circular-menu li.slice.dummy .slice-contents,[data-is="circular-menu"] li.slice.dummy .slice-contents{ background-color: rgba(222, 222, 222, 0.75); }', '', function(opts) {
@@ -362,7 +362,7 @@ riot.tag2('metsimage', '<div class="mets-image__wrapper {opts.metsimage.selected
     	this.fetchDimensions = function() {
     	    let imageName = this.getImageName(this.opts.metsimage.location);
     	    let processId = this.opts.processid;
-    	    let url = `/goobi/api/image/${processId}/media/${imageName}/info.json`;
+    	    let url = `/goobi/api/process/image/${processId}/media/${imageName}/info.json`;
     	    fetch(url).then(resp => {
     	        resp.json().then(json => {
     	            var ratio = json.width / json.height;
@@ -375,14 +375,13 @@ riot.tag2('metsimage', '<div class="mets-image__wrapper {opts.metsimage.selected
 
     	this.getImageName = function(location) {
     	    let lastSlash = Math.max(location.lastIndexOf("/"), location.lastIndexOf("\\"));
-    	    let lastDot = location.lastIndexOf(".");
-    	    return location.substring(lastSlash+1, lastDot);
+    	    return location.substring(lastSlash+1);
     	}.bind(this)
 
     	this.getImageUrl = function(location, width, height) {
     	    let imageName = this.getImageName(location);
     	    let processId = this.opts.processid;
-    	    return `/goobi/api/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
+    	    return `/goobi/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
     	}.bind(this)
 
     	this.createObserver = function() {
