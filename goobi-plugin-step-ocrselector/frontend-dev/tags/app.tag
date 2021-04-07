@@ -6,13 +6,17 @@
                  <i class="fa fa-puzzle-piece"></i>
                  OCR Auswahl
              </h3>
-             <div class="actions">
+			<div class="actions">
 				<a class="btn btn-mini btn-default" onclick={save}>Speichern</a>
 				<a class="btn btn-mini btn-default" onclick={leave}>Plugin verlassen</a>
-             </div>
-         </div>
+			</div>
+		</div>
 
-         <div class="box-content" style="background-color:#eee">
+		<div class="box-content" style="background-color:#eee">
+			<form>
+				<input type="checkbox" id="checkboxSelectAll" name="selector" onclick={selectDeselectAll}>
+				<label id="checkboxSelectAllLabel" for="selector">Alle / keines ausw&auml;hlen</label>
+			</form>
 			<div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs">
 				<div each={image in images} class="structure-data-editor__thumbnail">
 					<figure>
@@ -26,6 +30,10 @@
 						<div if={image.blur} class="blurred" onclick={imageClick} onmouseenter={mouseenterImage} onmouseleave={mouseleaveImage}></div>
 					</figure>
 				</div>
+			</div>
+			<div class="footer-actions">
+				<a class="btn btn-mini btn-default" onclick={save}>Speichern</a>
+				<a class="btn btn-mini btn-default" onclick={leave}>Plugin verlassen</a>
 			</div>
 		</div>
 	</div>
@@ -80,6 +88,29 @@
 		        }
 		        this.update();
 		    }.bind(this))
+		}
+
+		selectDeselectAll() {
+			var checkbox = document.getElementById('checkboxSelectAll');
+			if (checkbox.checked) {
+				this.selectAll();
+			} else {
+				this.deselectAll();
+			}
+			this.blurImages();
+			this.update();
+		}
+
+		selectAll() {
+			for(var image of this.images) {
+				image.selected = true;
+			}
+		}
+
+		deselectAll() {
+			for(var image of this.images) {
+				image.selected = false;
+			}
 		}
 		
 		save() {
@@ -243,8 +274,24 @@
 		}
 		
 		this.keydownListener =  function(e) {
-		    console.log("key down")
-		    if(e.keyCode === 27) {
+			console.log("key down")
+			
+			if (e.keyCode == 65) {
+				e.preventDefault();
+				e.stopPropagation();
+				var checkbox = document.getElementById('checkboxSelectAll');
+				checkbox.checked = !e.shiftKey;
+				if (e.ctrlKey) {
+					if (!e.shiftKey) {
+						this.selectAll();
+					} else {
+						this.deselectAll();
+					}
+				}
+				return;
+			}
+			
+			if(e.keyCode === 27) {
 		        if(this.showAltMenu) {
 			        this.showAltMenu = false;
 			    } else if(this.showMenu) {

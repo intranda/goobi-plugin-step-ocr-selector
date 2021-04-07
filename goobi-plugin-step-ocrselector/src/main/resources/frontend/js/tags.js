@@ -1,4 +1,4 @@
-riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/style.css"><div class="box box-color lightgrey box-bordered"><div class="box-title"><h3><i class="fa fa-puzzle-piece"></i> OCR Auswahl </h3><div class="actions"><a class="btn btn-mini btn-default" onclick="{save}">Speichern</a><a class="btn btn-mini btn-default" onclick="{leave}">Plugin verlassen</a></div></div><div class="box-content" style="background-color:#eee"><div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs"><div each="{image in images}" class="structure-data-editor__thumbnail"><figure><a onclick="{imageClick}" onmouseenter="{mouseenterImage}" onmouseleave="{mouseleaveImage}"><metsimage metsimage="{image}" observer="{menuObserver}" processid="{generalOpts.processId}"></metsImage></a><figcaption class="structure-data-editor__thumbnail-image-order"> {image.label} </figcaption><div if="{image.blur}" class="blurred" onclick="{imageClick}" onmouseenter="{mouseenterImage}" onmouseleave="{mouseleaveImage}"></div></figure></div></div></div></div><div class="structure-data-editor__bigimage" if="{showBigImage}" onclick="{hideBigImage}"><img id="bigImage" riot-src="{bigImageUrl}"></div><circular-menu if="{showMenu}" left="{left}" top="{top}" values="{menuItems}" observer="{menuObserver}"></circular-menu>', '', '', function(opts) {
+riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/style.css"><div class="box box-color lightgrey box-bordered"><div class="box-title"><h3><i class="fa fa-puzzle-piece"></i> OCR Auswahl </h3><div class="actions"><a class="btn btn-mini btn-default" onclick="{save}">Speichern</a><a class="btn btn-mini btn-default" onclick="{leave}">Plugin verlassen</a></div></div><div class="box-content" style="background-color:#eee"><form><input type="checkbox" id="checkboxSelectAll" name="selector" onclick="{selectDeselectAll}"><label id="checkboxSelectAllLabel" for="selector">Alle / keines ausw&auml;hlen</label></form><div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs"><div each="{image in images}" class="structure-data-editor__thumbnail"><figure><a onclick="{imageClick}" onmouseenter="{mouseenterImage}" onmouseleave="{mouseleaveImage}"><metsimage metsimage="{image}" observer="{menuObserver}" processid="{generalOpts.processId}"></metsImage></a><figcaption class="structure-data-editor__thumbnail-image-order"> {image.label} </figcaption><div if="{image.blur}" class="blurred" onclick="{imageClick}" onmouseenter="{mouseenterImage}" onmouseleave="{mouseleaveImage}"></div></figure></div></div><div class="footer-actions"><a class="btn btn-mini btn-default" onclick="{save}">Speichern</a><a class="btn btn-mini btn-default" onclick="{leave}">Plugin verlassen</a></div></div></div><div class="structure-data-editor__bigimage" if="{showBigImage}" onclick="{hideBigImage}"><img id="bigImage" riot-src="{bigImageUrl}"></div><circular-menu if="{showMenu}" left="{left}" top="{top}" values="{menuItems}" observer="{menuObserver}"></circular-menu>', '', '', function(opts) {
 		this.generalOpts = window[window["plugin_name"]];
 		function Observer() {
 		    riot.observable(this);
@@ -41,6 +41,29 @@ riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/
 		        }
 		        this.update();
 		    }.bind(this))
+		}.bind(this)
+
+		this.selectDeselectAll = function() {
+			var checkbox = document.getElementById('checkboxSelectAll');
+			if (checkbox.checked) {
+				this.selectAll();
+			} else {
+				this.deselectAll();
+			}
+			this.blurImages();
+			this.update();
+		}.bind(this)
+
+		this.selectAll = function() {
+			for(var image of this.images) {
+				image.selected = true;
+			}
+		}.bind(this)
+
+		this.deselectAll = function() {
+			for(var image of this.images) {
+				image.selected = false;
+			}
 		}.bind(this)
 
 		this.save = function() {
@@ -204,8 +227,24 @@ riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/
 		}.bind(this)
 
 		this.keydownListener =  function(e) {
-		    console.log("key down")
-		    if(e.keyCode === 27) {
+			console.log("key down")
+
+			if (e.keyCode == 65) {
+				e.preventDefault();
+				e.stopPropagation();
+				var checkbox = document.getElementById('checkboxSelectAll');
+				checkbox.checked = !e.shiftKey;
+				if (e.ctrlKey) {
+					if (!e.shiftKey) {
+						this.selectAll();
+					} else {
+						this.deselectAll();
+					}
+				}
+				return;
+			}
+
+			if(e.keyCode === 27) {
 		        if(this.showAltMenu) {
 			        this.showAltMenu = false;
 			    } else if(this.showMenu) {
