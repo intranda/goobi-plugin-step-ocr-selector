@@ -14,8 +14,10 @@
 
 		<div class="box-content" style="background-color:#eee">
 			<form>
-				<input type="checkbox" id="checkboxSelectAll" name="selector" onclick={selectDeselectAll}>
-				<label id="checkboxSelectAllLabel" for="selector">Alle / keines ausw&auml;hlen</label>
+				<label id="checkboxSelectAllLabel">
+                    <input type="checkbox" id="checkboxSelectAll" onchange={selectDeselectAll}>
+                    Alle / keines auswählen
+                </label>
 			</form>
 			<div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs">
 				<div each={image in images} class="structure-data-editor__thumbnail">
@@ -90,13 +92,15 @@
 		    }.bind(this))
 		}
 
-		selectDeselectAll() {
-			var checkbox = document.getElementById('checkboxSelectAll');
+		selectDeselectAll(e) {
+			var checkbox = e.target;
 			if (checkbox.checked) {
+				console.log("select all")
 				this.selectAll();
 			} else {
 				this.deselectAll();
 			}
+			console.log(this.images)
 			this.blurImages();
 			this.update();
 		}
@@ -279,14 +283,16 @@
 			if (e.keyCode == 65) {
 				e.preventDefault();
 				e.stopPropagation();
-				var checkbox = document.getElementById('checkboxSelectAll');
-				checkbox.checked = !e.shiftKey;
 				if (e.ctrlKey) {
+    				var checkbox = document.getElementById('checkboxSelectAll');
+    				checkbox.checked = !e.shiftKey;
 					if (!e.shiftKey) {
 						this.selectAll();
 					} else {
 						this.deselectAll();
 					}
+					this.blurImages();
+					this.update();
 				}
 				return;
 			}
