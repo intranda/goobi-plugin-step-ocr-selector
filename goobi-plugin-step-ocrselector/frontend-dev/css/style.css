@@ -258,7 +258,6 @@
 	float: right;
 }
 
-.footer-actions a {
-	background-color: rgb(255, 255, 255);
-	margin-left: 15px;
+.footer-actions .btn:not(:last-child) {
+	margin-right: 15px;
 }

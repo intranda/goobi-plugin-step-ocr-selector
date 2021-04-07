@@ -34,8 +34,8 @@
 				</div>
 			</div>
 			<div class="footer-actions">
-				<a class="btn btn-mini btn-default" onclick={save}>Speichern</a>
-				<a class="btn btn-mini btn-default" onclick={leave}>Plugin verlassen</a>
+				<button type="button" class="btn btn-blue" onclick={save}>Speichern</a>
+				<button type="button" class="btn btn-blue" onclick={leave}>Plugin verlassen</a>
 			</div>
 		</div>
 	</div>
