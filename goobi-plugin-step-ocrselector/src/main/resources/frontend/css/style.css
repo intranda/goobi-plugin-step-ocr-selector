@@ -249,3 +249,16 @@
 .side-tree ul li.no-children a {
 	cursor: text;
 }
+
+#checkboxSelectAllLabel {
+	margin-left: 10px;
+}
+
+.footer-actions {
+	float: right;
+}
+
+.footer-actions a {
+	background-color: rgb(255, 255, 255);
+	margin-left: 15px;
+}
