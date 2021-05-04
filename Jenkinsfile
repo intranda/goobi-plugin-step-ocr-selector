@@ -9,13 +9,13 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'mvn -f goobi-plugin-step-ocrselector/pom.xml install'
+        sh 'mvn -f goobi-plugin-step-ocrselector/pom.xml package'
       }
     }
   }
   post {
     success {
-      archiveArtifacts artifacts: 'goobi-plugin-step-ocrselector/target/plugin_intranda_step_ocrselector.jar', fingerprint:
+      archiveArtifacts artifacts: 'goobi-plugin-step-ocrselector/INSTALL.md, goobi-plugin-step-ocrselector/target/plugin_intranda_step_ocrselector.tar', fingerprint:
       true
     }
   }

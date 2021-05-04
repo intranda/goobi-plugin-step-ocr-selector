@@ -53,32 +53,26 @@
 					<skipTests>true</skipTests>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-dependency-plugin</artifactId> -->
-			<!-- <version>2.8</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>copy-installed</id> -->
-			<!-- <phase>install</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>copy</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <artifactItems> -->
-			<!-- <artifactItem> -->
-			<!-- <groupId>${project.groupId}</groupId> -->
-			<!-- <artifactId>${project.artifactId}</artifactId> -->
-			<!-- <version>${project.version}</version> -->
-			<!-- <type>${project.packaging}</type> -->
-			<!-- <destFileName>${jar.name}.jar</destFileName> -->
-			<!-- </artifactItem> -->
-			<!-- </artifactItems> -->
-			<!-- <outputDirectory>${dest.folder}</outputDirectory> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
+             <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>${jar.name}</finalName>
+                    <descriptors>
+                        <descriptor>${basedir}/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-archive</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 </project>
