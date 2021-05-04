@@ -4,11 +4,11 @@
          <div class="box-title">
              <h3>
                  <i class="fa fa-puzzle-piece"></i>
-                 OCR Auswahl
+                 {msg('plugin_intranda_step_ocrselector')}
              </h3>
 			<div class="actions">
-				<a class="btn btn-mini btn-default" onclick={save}>Speichern</a>
-				<a class="btn btn-mini btn-default" onclick={leave}>Plugin verlassen</a>
+				<a class="btn btn-mini btn-default" onclick={save}>{msg('save')}</a>
+				<a class="btn btn-mini btn-default" onclick={leave}>{msg('pluginLeave')}</a>
 			</div>
 		</div>
 
@@ -16,7 +16,7 @@
 			<form>
 				<label id="checkboxSelectAllLabel">
                     <input type="checkbox" id="checkboxSelectAll" onchange={selectDeselectAll}>
-                    Alle / keines auswählen
+                    {msg('alleAuswaehlen')}
                 </label>
 			</form>
 			<div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs">
@@ -34,8 +34,8 @@
 				</div>
 			</div>
 			<div class="footer-actions">
-				<button type="button" class="btn btn-blue" onclick={save}>Speichern</a>
-				<button type="button" class="btn btn-blue" onclick={leave}>Plugin verlassen</a>
+				<button type="button" class="btn btn-blue" onclick={save}>{msg('save')}</a>
+				<button type="button" class="btn btn-blue" onclick={leave}>{msg('pluginLeave')}</a>
 			</div>
 		</div>
 	</div>
@@ -58,6 +58,7 @@
 		this.menuItems = ["antiqua", "fraktur", "keine OCR"];
 		
 		this.on("mount", () => {
+			console.log("AAA", this.generalOpts)
 		    $.ajax( {
 			        url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/dd",
 			        type: "GET",
@@ -70,7 +71,16 @@
 			        this.getSavedData();
 			        this.update();
 			    }.bind(this))
-		})
+		    fetch(`/goobi/api/messages/${this.generalOpts.language}`, {
+                  method: 'GET',
+                  credentials: 'same-origin'
+              }).then(resp => {
+                resp.json().then(json => {
+                  this.msgs = json;
+                  this.update();
+                })
+              })
+			})
 		
 		getSavedData() {
 		    $.ajax( {
@@ -337,5 +347,14 @@
     	    let processId = this.generalOpts.processId;
     	    return `/goobi/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
     	}
+    	msg(str) {
+	      if(!this.msgs || Object.keys(this.msgs).length == 0) {
+	          return "*".repeat(str.length);
+	      }
+	      if(this.msgs[str]) {
+	        return this.msgs[str];
+	      }
+	      return "???" + str + "???";
+	    }
 	</script>
 </app>
