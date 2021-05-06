@@ -45,7 +45,7 @@
 	</div>
 
 
-	<circular-menu if={showMenu} left={left} top={top} values={menuItems} observer={menuObserver}></circular-menu>
+	<circular-menu if={showMenu} left={left} top={top} values={menuItems[generalOpts.language]} observer={menuObserver}></circular-menu>
 	
 	<script>
 		this.generalOpts = window[window["plugin_name"]];
@@ -55,7 +55,11 @@
 		this.menuObserver = new Observer();
 		this.images = [];
 		this.imageMap = {};
-		this.menuItems = ["antiqua", "fraktur", "keine OCR"];
+		this.menuItems = {
+				"de": ["antiqua", "fraktur", "keine OCR"], 
+				"en": ["antiqua", "fracture", "no OCR"],
+				"iw": ["antiqua", "fracture", "no OCR"],
+				"es": ["antiqua", "fracture", "no OCR"]};
 		
 		this.on("mount", () => {
 			console.log("AAA", this.generalOpts)
