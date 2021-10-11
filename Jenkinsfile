@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'mvn -f goobi-plugin-step-ocrselector/pom.xml package'
+        sh 'mvn -f plugin/pom.xml package'
       }
     }
   }
