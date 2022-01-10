@@ -15,7 +15,7 @@ pipeline {
   }
   post {
     success {
-      archiveArtifacts artifacts: 'goobi-plugin-step-ocrselector/INSTALL.md, goobi-plugin-step-ocrselector/target/plugin_intranda_step_ocrselector.tar', fingerprint:
+      archiveArtifacts artifacts: 'plugin/INSTALL.md, plugin/target/plugin_intranda_step_ocrselector.tar', fingerprint:
       true
     }
   }
