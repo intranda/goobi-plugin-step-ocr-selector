@@ -14,6 +14,8 @@
             <outputDirectory>/</outputDirectory>
             <includes>
                 <include>pom.xml</include>
+                <include>module-main/pom.xml</include>
+                <include>module-gui/pom.xml</include>
             </includes>
         </fileSet>
 		<fileSet>
