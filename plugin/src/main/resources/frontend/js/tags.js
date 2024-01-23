@@ -1,4 +1,4 @@
-riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/style.css"><div class="box box-color lightgrey box-bordered"><div class="box-title"><h3><i class="fa fa-puzzle-piece"></i> {msg(\'plugin_intranda_step_ocrselector\')} </h3><div class="actions"><a class="btn btn-mini btn-default" onclick="{save}">{msg(\'save\')}</a><a class="btn btn-mini btn-default" onclick="{leave}">{msg(\'pluginLeave\')}</a></div></div><div class="box-content" style="background-color:#eee"><form><label id="checkboxSelectAllLabel"><input type="checkbox" id="checkboxSelectAll" onchange="{selectDeselectAll}"> {msg(\'alleAuswaehlen\')} </label></form><div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs"><div each="{image in images}" class="structure-data-editor__thumbnail"><figure><a onclick="{imageClick}" onmouseenter="{mouseenterImage}" onmouseleave="{mouseleaveImage}"><metsimage metsimage="{image}" observer="{menuObserver}" processid="{generalOpts.processId}"></metsImage></a><figcaption class="structure-data-editor__thumbnail-image-order"> {image.label} </figcaption><div if="{image.blur}" class="blurred" onclick="{imageClick}" onmouseenter="{mouseenterImage}" onmouseleave="{mouseleaveImage}"></div></figure></div></div><div class="footer-actions"><button type="button" class="btn btn-blue" onclick="{save}">{msg(\'save\')}</a><button type="button" class="btn btn-blue" onclick="{leave}">{msg(\'pluginLeave\')}</a></div></div></div><div class="structure-data-editor__bigimage" if="{showBigImage}" onclick="{hideBigImage}"><img id="bigImage" riot-src="{bigImageUrl}"></div><circular-menu if="{showMenu}" left="{left}" top="{top}" values="{menuItems[generalOpts.language]}" observer="{menuObserver}"></circular-menu>', '', '', function(opts) {
+riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/style.css"><div class="box box-color lightgrey box-bordered"><div class="box-title"><h3><i class="fa fa-puzzle-piece"></i> {msg(\'plugin_intranda_step_ocrselector\')} </h3><div class="actions"><a class="btn btn-mini btn-default" onclick="{save}">{msg(\'save\')}</a><a class="btn btn-mini btn-default" onclick="{cancel}">{msg(\'cancel\')}</a><a class="btn btn-mini btn-default" onclick="{saveAndLeave}">{msg(\'pluginSaveAndLeave\')}</a></div></div><div class="box-content" style="background-color:#eee"><form><label id="checkboxSelectAllLabel"><input type="checkbox" id="checkboxSelectAll" onchange="{selectDeselectAll}"> {msg(\'alleAuswaehlen\')} </label></form><div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs"><div each="{image in images}" class="structure-data-editor__thumbnail"><figure><a onclick="{imageClick}" onmouseenter="{mouseenterImage}" onmouseleave="{mouseleaveImage}"><metsimage metsimage="{image}" observer="{menuObserver}" processid="{generalOpts.processId}"></metsImage></a><figcaption class="structure-data-editor__thumbnail-image-order"> {image.label} </figcaption><div if="{image.blur}" class="blurred" onclick="{imageClick}" onmouseenter="{mouseenterImage}" onmouseleave="{mouseleaveImage}"></div></figure></div></div><div class="footer-actions"><button type="button" class="btn btn-blue" onclick="{save}">{msg(\'save\')}</button><button type="button" class="btn btn-blue" onclick="{cancel}">{msg(\'cancel\')}</button><button type="button" class="btn btn-blue" onclick="{saveAndLeave}">{msg(\'pluginSaveAndLeave\')}</button></div></div></div><div class="structure-data-editor__bigimage" if="{showBigImage}" onclick="{hideBigImage}"><img id="bigImage" riot-src="{bigImageUrl}"></div><circular-menu if="{showMenu}" left="{left}" top="{top}" values="{menuItems[generalOpts.language]}" observer="{menuObserver}"></circular-menu>', '', '', function(opts) {
 		this.generalOpts = window[window["plugin_name"]];
 		function Observer() {
 		    riot.observable(this);
@@ -82,21 +82,25 @@ riot.tag2('app', '<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/
 			}
 		}.bind(this)
 
-		this.save = function() {
-		    var saveData = {};
-		    for(var image of this.images) {
-	            var name = this.getImageName(image.location);
-	            saveData[name] = image.label;
-		    }
-		    return $.ajax({
-		        url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/results",
-		        type:"POST",
-		        contentType: "application/json; charset=utf-8",
-		        data: JSON.stringify(saveData)
-		    })
+		this.cancel = function() {
+			document.getElementById("restPluginFinishLink").click();
 		}.bind(this)
 
-		this.leave = function() {
+		this.save = function() {
+			var saveData = {};
+			for(var image of this.images) {
+				var name = this.getImageName(image.location);
+				saveData[name] = image.label;
+			}
+			return $.ajax({
+				url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/results",
+				type:"POST",
+				contentType: "application/json; charset=utf-8",
+				data: JSON.stringify(saveData)
+			})
+		}.bind(this)
+
+		this.saveAndLeave = function() {
 		    this.save().then( () => {
 		    	document.getElementById("restPluginFinishLink").click();
 		    });

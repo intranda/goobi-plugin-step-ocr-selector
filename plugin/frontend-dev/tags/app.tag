@@ -8,7 +8,8 @@
              </h3>
 			<div class="actions">
 				<a class="btn btn-mini btn-default" onclick={save}>{msg('save')}</a>
-				<a class="btn btn-mini btn-default" onclick={leave}>{msg('pluginLeave')}</a>
+				<a class="btn btn-mini btn-default" onclick={cancel}>{msg('cancel')}</a>
+				<a class="btn btn-mini btn-default" onclick={saveAndLeave}>{msg('pluginSaveAndLeave')}</a>
 			</div>
 		</div>
 
@@ -34,8 +35,9 @@
 				</div>
 			</div>
 			<div class="footer-actions">
-				<button type="button" class="btn btn-blue" onclick={save}>{msg('save')}</a>
-				<button type="button" class="btn btn-blue" onclick={leave}>{msg('pluginLeave')}</a>
+				<button type="button" class="btn btn-blue" onclick={save}>{msg('save')}</button>
+				<button type="button" class="btn btn-blue" onclick={cancel}>{msg('cancel')}</button>
+				<button type="button" class="btn btn-blue" onclick={saveAndLeave}>{msg('pluginSaveAndLeave')}</button>
 			</div>
 		</div>
 	</div>
@@ -130,22 +132,26 @@
 				image.selected = false;
 			}
 		}
-		
+
+		cancel() {
+			document.getElementById("restPluginFinishLink").click();
+		}
+
 		save() {
-		    var saveData = {};
-		    for(var image of this.images) {
-	            var name = this.getImageName(image.location);
-	            saveData[name] = image.label;
-		    }
-		    return $.ajax({
-		        url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/results",
-		        type:"POST",
-		        contentType: "application/json; charset=utf-8",
-		        data: JSON.stringify(saveData)
-		    })
+			var saveData = {};
+			for(var image of this.images) {
+				var name = this.getImageName(image.location);
+				saveData[name] = image.label;
+			}
+			return $.ajax({
+				url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/results",
+				type:"POST",
+				contentType: "application/json; charset=utf-8",
+				data: JSON.stringify(saveData)
+			})
 		}
 		
-		leave() {
+		saveAndLeave() {
 		    this.save().then( () => {
 		    	document.getElementById("restPluginFinishLink").click();
 		    });
