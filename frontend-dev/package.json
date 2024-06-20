@@ -1,6 +1,9 @@
 {
   "name": "goobi_plugin_step_ocrselector",
   "version": "0.1.8",
+  "scripts": {
+    "build": "grunt"
+  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",

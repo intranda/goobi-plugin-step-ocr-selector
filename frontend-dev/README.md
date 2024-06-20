@@ -6,7 +6,7 @@ You will need nodejs and npm installed to build this project. WIth both installe
 
 ```
 npm install
-grunt
+npm run build
 ```
 
 `grunt` builds the application and copies it to the correct folder in `/opt/digiverso/goobi/`.
