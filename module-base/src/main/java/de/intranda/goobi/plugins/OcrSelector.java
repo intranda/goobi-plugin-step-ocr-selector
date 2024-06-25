@@ -1,23 +1,18 @@
 package de.intranda.goobi.plugins;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-
+import de.intranda.goobi.plugins.ocrselector.Routes;
+import lombok.Data;
+import lombok.extern.log4j.Log4j;
+import net.xeoh.plugins.base.annotations.PluginImplementation;
 import org.goobi.beans.Step;
 import org.goobi.production.enums.PluginGuiType;
 import org.goobi.production.enums.PluginType;
 import org.goobi.production.enums.StepReturnValue;
 import org.goobi.production.plugin.interfaces.IRestGuiPlugin;
-
-import de.intranda.goobi.plugins.ocrselector.Routes;
-import lombok.Data;
-import lombok.extern.log4j.Log4j;
-import net.xeoh.plugins.base.annotations.PluginImplementation;
 import spark.Service;
+
+import java.nio.file.Path;
+import java.util.HashMap;
 
 @Log4j
 @Data
@@ -25,29 +20,11 @@ import spark.Service;
 public class OcrSelector implements IRestGuiPlugin {
     private Step step;
     private String returnPath;
-    private String title = "intranda_step_ocrselector";
+    private String title = "intranda_step_ocr_selector";
 
     @Override
     public void extractAssets(Path assetsDir) {
-        String[] paths = new String[] { "css/style.css", "js/app.js", "js/riot.min.js", "js/tags.js", "js/ugh.js" };
-        for (String p : paths) {
-            extractFile(p, assetsDir);
-        }
-    }
 
-    private void extractFile(String filePath, Path assetsDir) {
-        Path out = assetsDir.resolve("plugins").resolve(title).resolve(filePath);
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("/frontend/" + filePath)) {
-            if (!Files.exists(out.getParent())) {
-                Files.createDirectories(out.getParent());
-            }
-            if (is != null) {
-                Files.copy(is, out, StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            log.error(e);
-        }
     }
 
     @Override
@@ -67,7 +44,7 @@ public class OcrSelector implements IRestGuiPlugin {
 
     @Override
     public String getPagePath() {
-        return "/uii/guiPlugin.xhtml";
+        return "/uii/plugin_step_ocr_selector.xhtml";
     }
 
     @Override
@@ -97,7 +74,12 @@ public class OcrSelector implements IRestGuiPlugin {
 
     @Override
     public String[] getJsPaths() {
-        return new String[] { "js/riot.min.js", "js/tags.js", "js/app.js", "js/ugh.js" };
+        return new String[] { "riot.min.js", "tags.js", "app.js", "ugh.js" };
+    }
+
+    @Override
+    public String[] getCssPaths() {
+        return new String[] { "style.css" };
     }
 
     @Override

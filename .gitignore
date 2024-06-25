@@ -8,6 +8,7 @@ target/
 bin/
 build/
 node_modules/
+tags.js
 
 # Eclipse
 .project

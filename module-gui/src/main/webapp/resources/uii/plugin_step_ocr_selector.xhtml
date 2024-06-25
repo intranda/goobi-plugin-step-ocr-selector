@@ -1,0 +1,41 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+    <composite:interface>
+    </composite:interface>
+    <composite:implementation>
+        <c:forEach
+                items="#{NavigationForm.workflowPlugin.cssPaths}"
+                var="cssPath"
+        >
+            <link
+                    type="text/css"
+                    rel="stylesheet"
+                    href="#{HelperForm.applicationWebsiteUrl}dist/#{NavigationForm.workflowPlugin.title}/css/#{cssPath}" />
+        </c:forEach>
+        <main>
+            <app id="root"></app>
+            <script>
+                let pluginTitle = "#{NavigationForm.workflowPlugin.title}";
+                let options = {
+                    userId: #{LoginForm.myBenutzer.id},
+                    language: "#{SpracheForm.locale.language}"
+                };
+                window["plugin_name"] = pluginTitle;
+                window[pluginTitle] = options;
+            </script>
+            <c:forEach
+                    items="#{NavigationForm.workflowPlugin.jsPaths}"
+                    var="jsPath"
+            >
+                <script
+                        src="#{HelperForm.applicationWebsiteUrl}dist/#{NavigationForm.workflowPlugin.title}/js/#{jsPath}"
+                        type="text/javascript"
+                ></script>
+            </c:forEach>
+        </main>
+    </composite:implementation>
+</ui:composition>
