@@ -40,7 +40,7 @@ public class OcrSelector implements IRestPlugin, IGuiPlugin, IStepPlugin {
 
     @Override
     public String getPagePath() {
-        return "/uii/plugin_step_ocr_selector.xhtml";
+        return "/uii/guiPluginNew.xhtml";
     }
 
     @Override
