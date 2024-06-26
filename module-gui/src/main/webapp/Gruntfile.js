@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             dist: {
                 expand: false,
                 src: 'tags/*.tag',
-                dest: 'resources/dist/plugin_step_ocr_selector/js/tags.js',
+                dest: 'resources/dist/intranda_step_ocrselector/js/tags.js',
             }
         },
         watcher: {

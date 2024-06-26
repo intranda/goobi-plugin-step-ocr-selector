@@ -8,24 +8,20 @@ import org.goobi.beans.Step;
 import org.goobi.production.enums.PluginGuiType;
 import org.goobi.production.enums.PluginType;
 import org.goobi.production.enums.StepReturnValue;
-import org.goobi.production.plugin.interfaces.IRestGuiPlugin;
+import org.goobi.production.plugin.interfaces.IGuiPlugin;
+import org.goobi.production.plugin.interfaces.IRestPlugin;
+import org.goobi.production.plugin.interfaces.IStepPlugin;
 import spark.Service;
 
-import java.nio.file.Path;
 import java.util.HashMap;
 
 @Log4j
 @Data
 @PluginImplementation
-public class OcrSelector implements IRestGuiPlugin {
+public class OcrSelector implements IRestPlugin, IGuiPlugin, IStepPlugin {
     private Step step;
     private String returnPath;
-    private String title = "intranda_step_ocr_selector";
-
-    @Override
-    public void extractAssets(Path assetsDir) {
-
-    }
+    private String title = "intranda_step_ocrselector";
 
     @Override
     public String cancel() {
@@ -85,6 +81,5 @@ public class OcrSelector implements IRestGuiPlugin {
     @Override
     public void initRoutes(Service http) {
         Routes.initRoutes(http);
-
     }
 }
