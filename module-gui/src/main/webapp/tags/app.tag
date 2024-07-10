@@ -134,7 +134,7 @@
 		}
 
 		cancel() {
-			document.getElementById("restPluginFinishLink").click();
+			document.getElementById("restPluginCancelLink").click();
 		}
 
 		save() {
