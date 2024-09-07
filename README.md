@@ -15,8 +15,8 @@ Detail                      | Description
 **Plugin identifier**       | intranda_step_ocrselector
 **Plugin type**             | step
 **Licence**                 | GPL 2.0 or newer
-**Documentation (German)**  | https://docs.goobi.io/workflow-plugins/v/eng/step/goobi-plugin-step-ocr-selector
-**Documentation (English)** | https://docs.goobi.io/workflow-plugins/v/ger/step/goobi-plugin-step-ocr-selector
+**Documentation (German)**  | https://docs.goobi.io/workflow-plugins/v/ger/step/goobi-plugin-step-ocr-selector
+**Documentation (English)** | https://docs.goobi.io/workflow-plugins/v/eng/step/goobi-plugin-step-ocr-selector
 
 ## Goobi details
 
