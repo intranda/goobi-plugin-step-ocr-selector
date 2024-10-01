@@ -1,5 +1,5 @@
 <app>
-	<link rel="stylesheet" href="/goobi/plugins/{plugin_name}/css/style.css">
+	<link rel="stylesheet" href="/goobi/dist/{plugin_name}/css/style.css">
 	<div class="box box-color lightgrey box-bordered">
          <div class="box-title">
              <h3>
