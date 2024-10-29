@@ -1,9 +1,4 @@
 <circular-menu>
-<!-- 	<div class="pie-highlight" if={highlight} style="top: {opts.top - 35}px; left: {opts.left}px"> -->
-<!-- 		<span> -->
-<!-- 	        {highlight} -->
-<!--         </span> -->
-<!--     </div> -->
     <div class="pie-container" style="top: {opts.top}px; left: {opts.left}px" onwheel={rotate}>
         <ul class="pie">
             <li class="slice {highlight == option ? 'active' : ''} {option.dummy ? 'dummy' : ''} {option.type}" each={lines} style="transform: rotate({deg}deg) skew(-{skew}deg);" onmouseover={mouseover} onclick={mouseClick} oncontextmenu={onContext}>
@@ -16,9 +11,9 @@
     </div>
 
     <style>
-        .pie-highlight {                                                                                                                                                                                                                                                                                                      
-            position: fixed;                                                                                                                                                                                                                                                                                                  
-            width: 400px;       
+        .pie-highlight {
+            position: fixed;
+            width: 400px;
             text-align: center;
             z-index: 50;
             user-select: none; /* Standard */
@@ -61,7 +56,7 @@
             position: absolute;
             top: 0; right: 0;
             width: 50%; height: 50%;
-            transform-origin: 0% 100%; 
+            transform-origin: 0% 100%;
         }
         .slice a {
         	font-size: 16px;
@@ -71,7 +66,7 @@
             text-align: center;
             position: absolute;
             left: -100%;
-            width: 200%; 
+            width: 200%;
             height: 200%;
             border-radius: 50%;
             background-color: rgba(54, 142, 224, 0.75);
@@ -81,7 +76,7 @@
             display: inline-block;
             padding-top: 12px;
             font-weight: bold;
-            -webkit-user-select: none; /* Safari */        
+            -webkit-user-select: none; /* Safari */
             -moz-user-select: none; /* Firefox */
             -ms-user-select: none; /* IE10+/Edge */
             user-select: none; /* Standard */
@@ -92,10 +87,10 @@
         .slice.remove.active .slice-contents {
         	background-color: rgb(255, 68, 51);
         }
-        .slice.active .slice-contents { 
+        .slice.active .slice-contents {
             background-color: rgb(54, 142, 224);
         } /* highlight on hover */
-        li.slice.dummy .slice-contents { 
+        li.slice.dummy .slice-contents {
         	background-color: rgba(222, 222, 222, 0.75);
         }
         </style>
@@ -107,11 +102,11 @@
                 this.calcValues();
             }
         });
-        
+
         this.on("mount", () => {
             this.values = opts.values;
             this.calcValues();
-        }) 
+        })
 
         rotate(e) {
             e.preventDefault();
@@ -129,7 +124,7 @@
             this.height = 100;
             this.div = 1;
             this.startDeg = 0;
-        
+
             this.deg = (360/Math.max(4, this.num));
             this.skew = 90 - this.deg;
 
@@ -150,7 +145,7 @@
                     hidden: this.div > 1 && i%this.div == 0
                 });
             }
-            
+
             for(var x=i; x<4; x++) {
                 var option = {
                         dummy: true,
@@ -184,7 +179,7 @@
             	opts.observer.trigger('itemselected', e.item.option);
             }
         }
-        
+
         onContext(e) {
             var circleCenter = {x: this.opts.left+200, y: this.opts.top+200};
             var clickPos = {x: e.clientX, y: e.clientY};

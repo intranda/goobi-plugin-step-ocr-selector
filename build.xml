@@ -3,7 +3,8 @@
 		<exec executable="mvn">
 			<arg value="package"/>
 		</exec>
-		<copy file="target/plugin_intranda_step_ocrselector.jar" todir="/opt/digiverso/goobi/plugins/step/"/>
+		<copy file="module-base/target/plugin-step-ocr-selector-base.jar" todir="/opt/digiverso/goobi/plugins/step/"/>
+		<copy file="module-gui/target/plugin-step-ocr-selector-gui.jar" todir="/opt/digiverso/goobi/plugins/GUI/"/>
 		<exec executable="curl">
 			<arg value="-X"/>
 			<arg value="PUT"/>
