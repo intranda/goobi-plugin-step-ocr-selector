@@ -41,8 +41,8 @@
 
 			<div class="box__body">
 				<form class="d-flex">
-					<label id="checkboxSelectAllLabel" class="ms-auto">
-						<input type="checkbox" id="checkboxSelectAll" onchange={selectDeselectAll}>
+					<input type="checkbox" id="checkboxSelectAll" onchange={selectDeselectAll} class="btn-check">
+					<label id="checkboxSelectAllLabel" class="btn" for="checkboxSelectAll">
 						{msg('alleAuswaehlen')}
 					</label>
 				</form>
