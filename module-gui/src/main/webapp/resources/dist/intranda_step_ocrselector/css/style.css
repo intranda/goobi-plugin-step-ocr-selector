@@ -3,7 +3,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	top: 0; 
+	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
@@ -20,8 +20,8 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	padding: 15px;
 }
+
 .structure-data-editor__thumbnail {
 	height: 500px;
 	min-width: 150px;
@@ -220,7 +220,7 @@
 	padding-left: 0px;
 }
 
-.side-tree li.has-children:before {	
+.side-tree li.has-children:before {
 	content: "-";
 	margin-right: 5.5px;
 }
@@ -248,16 +248,4 @@
 
 .side-tree ul li.no-children a {
 	cursor: text;
-}
-
-#checkboxSelectAllLabel {
-	margin-left: 10px;
-}
-
-.footer-actions {
-	float: right;
-}
-
-.footer-actions .btn:not(:last-child) {
-	margin-right: 15px;
 }

@@ -1,54 +1,80 @@
 <app>
-	<link rel="stylesheet" href="/goobi/dist/{plugin_name}/css/style.css">
-	<div class="box box-color lightgrey box-bordered">
-         <div class="box-title">
-             <h3>
-                 <i class="fa fa-puzzle-piece"></i>
-                 {msg('plugin_intranda_step_ocrselector')}
-             </h3>
-			<div class="actions">
-				<a class="btn btn-mini btn-default" onclick={save}>{msg('save')}</a>
-				<a class="btn btn-mini btn-default" onclick={cancel}>{msg('cancel')}</a>
-				<a class="btn btn-mini btn-default" onclick={saveAndLeave}>{msg('pluginSaveAndLeave')}</a>
-			</div>
-		</div>
-
-		<div class="box-content" style="background-color:#eee">
-			<form>
-				<label id="checkboxSelectAllLabel">
-                    <input type="checkbox" id="checkboxSelectAll" onchange={selectDeselectAll}>
-                    {msg('alleAuswaehlen')}
-                </label>
-			</form>
-			<div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs">
-				<div each={image in images} class="structure-data-editor__thumbnail">
-					<figure>
-						<a onclick={imageClick} onmouseenter={mouseenterImage} onmouseleave={mouseleaveImage}>
-							<metsImage metsimage={image} observer={menuObserver} processid={generalOpts.processId}></metsImage>
-						</a>
-						
-						<figcaption class="structure-data-editor__thumbnail-image-order">
-							{image.label}
-						</figcaption>
-						<div if={image.blur} class="blurred" onclick={imageClick} onmouseenter={mouseenterImage} onmouseleave={mouseleaveImage}></div>
-					</figure>
+	<div class="box box--neutral box--padded">
+		<div class="box__content">
+			<div class="box__title">
+				<h2>
+					<span
+						aria-hidden="true"
+						class="fa fa-puzzle-piece" />
+					{msg('plugin_intranda_step_ocrselector')}
+				</h2>
+				<div class="actions d-flex">
+					<a
+						class="btn d-flex align-items-center btn--title-action"
+						onclick={cancel}
+						title={msg('cancel')}
+						data-bs-toggle="tooltip">
+						<span
+							aria-hidden="true"
+							class="fa fa-close" />
+					</a>
+					<a
+						class="btn d-flex align-items-center btn--title-action"
+						onclick={save}
+						title={msg('save')}
+						data-bs-toggle="tooltip">
+						<span
+							aria-hidden="true"
+							class="fa fa-save" />
+					</a>
+					<a
+						class="btn d-flex align-items-center btn--title-action"
+						onclick={saveAndLeave}
+						title={msg('pluginSaveAndLeave')}
+						data-bs-toggle="tooltip">
+						<span
+							aria-hidden="true"
+							class="fa fa-check" />
+					</a>
 				</div>
 			</div>
-			<div class="footer-actions">
-				<button type="button" class="btn btn-blue" onclick={save}>{msg('save')}</button>
-				<button type="button" class="btn btn-blue" onclick={cancel}>{msg('cancel')}</button>
-				<button type="button" class="btn btn-blue" onclick={saveAndLeave}>{msg('pluginSaveAndLeave')}</button>
+
+			<div class="box__body">
+				<form class="d-flex">
+					<label id="checkboxSelectAllLabel" class="ms-auto">
+						<input type="checkbox" id="checkboxSelectAll" onchange={selectDeselectAll}>
+						{msg('alleAuswaehlen')}
+					</label>
+				</form>
+				<div class="structure-data-editor__thumbnails" ref="thumbnailWrapper" id="structure-data-thumbs">
+					<div each={image in images} class="structure-data-editor__thumbnail">
+						<figure>
+							<a onclick={imageClick} onmouseenter={mouseenterImage} onmouseleave={mouseleaveImage}>
+								<metsImage metsimage={image} observer={menuObserver} processid={generalOpts.processId}></metsImage>
+							</a>
+							<figcaption class="structure-data-editor__thumbnail-image-order">
+								{image.label}
+							</figcaption>
+							<div if={image.blur} class="blurred" onclick={imageClick} onmouseenter={mouseenterImage} onmouseleave={mouseleaveImage}></div>
+						</figure>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="button" class="btn btn-blank" onclick={cancel}>{msg('cancel')}</button>
+					<button type="button" class="btn btn-blank" onclick={save}>{msg('save')}</button>
+					<button type="button" class="btn btn-success" onclick={saveAndLeave}>{msg('pluginSaveAndLeave')}</button>
+				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="structure-data-editor__bigimage" if={showBigImage} onclick={hideBigImage}>
 		<img id="bigImage" src="{bigImageUrl}" />
 	</div>
 
 
 	<circular-menu if={showMenu} left={left} top={top} values={menuItems[generalOpts.language]} observer={menuObserver}></circular-menu>
-	
+
 	<script>
 		this.generalOpts = window[window["plugin_name"]];
 		function Observer() {
@@ -58,11 +84,11 @@
 		this.images = [];
 		this.imageMap = {};
 		this.menuItems = {
-				"de": ["antiqua", "fraktur", "keine OCR"], 
+				"de": ["antiqua", "fraktur", "keine OCR"],
 				"en": ["antiqua", "fracture", "no OCR"],
 				"iw": ["antiqua", "fracture", "no OCR"],
 				"es": ["antiqua", "fracture", "no OCR"]};
-		
+
 		this.on("mount", () => {
 			console.log("AAA", this.generalOpts)
 		    $.ajax( {
@@ -87,7 +113,7 @@
                 })
               })
 			})
-		
+
 		getSavedData() {
 		    $.ajax( {
 		        url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/saved",
@@ -150,19 +176,19 @@
 				data: JSON.stringify(saveData)
 			})
 		}
-		
+
 		saveAndLeave() {
 		    this.save().then( () => {
 		    	document.getElementById("restPluginFinishLink").click();
 		    });
 		}
-		
+
 		this.menuObserver.on('rightclickoutsidemenu', (e) => {
 		    this.showMenu = false;
 		    this.update();
 		    //document.elementFromPoint(e.clientX, e.clientY).click();
 		})
-		
+
 		this.menuObserver.on("itemselected", (option) => {
 		    console.log("item selceted handler")
 		    for(var image of this.images) {
@@ -175,7 +201,7 @@
 		    this.unSelectImages();
 		    this.update();
 		})
-		
+
 		this.menuObserver.on("openMenu", (e, image) => {
 		    let selCount = 0;
 		    for(var im of this.images){
@@ -189,7 +215,7 @@
 		    }
 		    this.openMenu(e);
 		})
-		
+
 		openMenu(e) {
 		    this.showMenu = true;
 		    var height = document.documentElement.clientHeight;
@@ -200,7 +226,7 @@
 		    this.update();
 		    return false;
 		}
-		
+
 		this.clickListener = function(e) {
 		    if(e.button === 2) {
 		        e.preventDefault();
@@ -216,17 +242,17 @@
 	        }
 		    this.update();
 		}.bind(this);
-		
+
 		document.addEventListener("click", this.clickListener);
-		
+
 		mouseenterImage(e) {
 		    this.mouseOverImage = e.item.image;
 		}
-		
+
 		mouseleaveImage() {
 		    this.mouseOverImage = null;
 		}
-		
+
 		imageClick(e) {
 		    e.preventDefault();
 		    e.stopPropagation();
@@ -262,7 +288,7 @@
            	this.blurImages();
             return false;
         }
-		
+
 		blurImages() {
 		    var count = 0;
 		    for(var image of this.images) {
@@ -284,7 +310,7 @@
 			    }
 		    }
 		}
-		
+
 		unSelectImages() {
 		    for(var image of this.images) {
 		        image.blur = false;
@@ -292,14 +318,14 @@
 		    }
 		    this.blurImages();
 		}
-		
+
 		hideBigImage() {
 		    this.showBigImage = false;
 		}
-		
+
 		this.keydownListener =  function(e) {
 			console.log("key down")
-			
+
 			if (e.keyCode == 65) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -316,7 +342,7 @@
 				}
 				return;
 			}
-			
+
 			if(e.keyCode === 27) {
 		        if(this.showAltMenu) {
 			        this.showAltMenu = false;
@@ -343,15 +369,15 @@
 		    	this.update();
 		    }
 		}.bind(this);
-		
+
 		document.addEventListener("keydown", this.keydownListener);
-		
+
 		getImageName(location) {
     	    let lastSlash = Math.max(location.lastIndexOf("/"), location.lastIndexOf("\\"));
     	    let lastDot = location.lastIndexOf(".");
     	    return location.substring(lastSlash+1, lastDot);
     	}
-    	
+
     	getImageUrl(location, width, height) {
     	    let imageName = this.getImageName(location);
     	    let processId = this.generalOpts.processId;
