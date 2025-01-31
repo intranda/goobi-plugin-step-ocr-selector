@@ -17,6 +17,7 @@
    		this.src = null;
    		this.tooltip = null;
    		this.tooltipLeft = 0;
+		const goobi_path = location.pathname.split('/')[1];
     
     	this.on('mount', function() {
     		this.fetchDimensions();
@@ -30,7 +31,7 @@
     	fetchDimensions() {
     	    let imageName = this.getImageName(this.opts.metsimage.location);
     	    let processId = this.opts.processid;
-    	    let url = `/workflow/api/process/image/${processId}/media/${imageName}/info.json`;
+    	    let url = `/${goobi_path}/api/process/image/${processId}/media/${imageName}/info.json`;
     	    fetch(url).then(resp => {
     	        resp.json().then(json => {
     	            var ratio = json.width / json.height;
@@ -49,7 +50,7 @@
     	getImageUrl(location, width, height) {
     	    let imageName = this.getImageName(location);
     	    let processId = this.opts.processid;
-    	    return `/workflow/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
+    	    return `/${goobi_path}/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
     	}
     	
     	createObserver() {
