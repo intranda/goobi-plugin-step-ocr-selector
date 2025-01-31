@@ -74,9 +74,4 @@ public class OcrSelector implements IGuiPlugin, IStepPlugin {
     public String[] getCssPaths() {
         return new String[] { "style.css" };
     }
-//
-//    @Override
-//    public void initRoutes(Service http) {
-//        Routes.initRoutes(http);
-//    }
 }
