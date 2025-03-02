@@ -1,6 +1,5 @@
 package de.intranda.goobi.plugins;
 
-import de.intranda.goobi.plugins.ocrselector.Routes;
 import lombok.Data;
 import lombok.extern.log4j.Log4j;
 import net.xeoh.plugins.base.annotations.PluginImplementation;
@@ -9,16 +8,14 @@ import org.goobi.production.enums.PluginGuiType;
 import org.goobi.production.enums.PluginType;
 import org.goobi.production.enums.StepReturnValue;
 import org.goobi.production.plugin.interfaces.IGuiPlugin;
-import org.goobi.production.plugin.interfaces.IRestPlugin;
 import org.goobi.production.plugin.interfaces.IStepPlugin;
-import spark.Service;
 
 import java.util.HashMap;
 
 @Log4j
 @Data
 @PluginImplementation
-public class OcrSelector implements IRestPlugin, IGuiPlugin, IStepPlugin {
+public class OcrSelector implements IGuiPlugin, IStepPlugin {
     private Step step;
     private String returnPath;
     private String title = "intranda_step_ocrselector";
@@ -76,10 +73,5 @@ public class OcrSelector implements IRestPlugin, IGuiPlugin, IStepPlugin {
     @Override
     public String[] getCssPaths() {
         return new String[] { "style.css" };
-    }
-
-    @Override
-    public void initRoutes(Service http) {
-        Routes.initRoutes(http);
     }
 }

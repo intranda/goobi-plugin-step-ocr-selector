@@ -5,6 +5,6 @@
     <artifactId>plugin-step-ocr-selector</artifactId>
     <version>25.02</version>
   </parent>
-  <artifactId>plugin-step-ocr-selector-base</artifactId>
+  <artifactId>plugin-step-ocr-selector-api</artifactId>
   <packaging>jar</packaging>
 </project>

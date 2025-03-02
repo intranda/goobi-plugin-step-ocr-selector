@@ -89,10 +89,11 @@
 				"iw": ["antiqua", "fracture", "no OCR"],
 				"es": ["antiqua", "fracture", "no OCR"]};
 
+		const goobi_path = location.pathname.split('/')[1];
 		this.on("mount", () => {
 			console.log("AAA", this.generalOpts)
 		    $.ajax( {
-			        url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/dd",
+			        url: "/${goobi_path}/api/plugins/ocrselector/" + this.generalOpts.processId + "/dd",
 			        type: "GET",
 			        datatype: "JSON"
 			    }).then(function(data) {
@@ -103,7 +104,7 @@
 			        this.getSavedData();
 			        this.update();
 			    }.bind(this))
-		    fetch(`/goobi/api/messages/${this.generalOpts.language}`, {
+		    fetch(`/${goobi_path}/api/messages/${this.generalOpts.language}`, {
                   method: 'GET',
                   credentials: 'same-origin'
               }).then(resp => {
@@ -116,7 +117,7 @@
 
 		getSavedData() {
 		    $.ajax( {
-		        url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/saved",
+		        url: "/${goobi_path}/api/plugins/ocrselector/" + this.generalOpts.processId + "/saved",
 			        type: "GET",
 			        datatype: "JSON"
 		    }).then(function(data) {
@@ -170,7 +171,7 @@
 				saveData[name] = image.label;
 			}
 			return $.ajax({
-				url: "/goobi/plugins/ocrselector/" + this.generalOpts.processId + "/results",
+				url: "/${goobi_path}/api/plugins/ocrselector/" + this.generalOpts.processId + "/results",
 				type:"POST",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(saveData)
@@ -381,7 +382,7 @@
     	getImageUrl(location, width, height) {
     	    let imageName = this.getImageName(location);
     	    let processId = this.generalOpts.processId;
-    	    return `/goobi/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
+    	    return `/${goobi_path}/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
     	}
     	msg(str) {
 	      if(!this.msgs || Object.keys(this.msgs).length == 0) {
