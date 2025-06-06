@@ -10,10 +10,10 @@ import de.sub.goobi.metadaten.MetadatenImagesHelper;
 import de.sub.goobi.persistence.managers.ProcessManager;
 import jakarta.ws.rs.*;
 import lombok.extern.log4j.Log4j2;
-import org.goobi.beans.Masterpiece;
-import org.goobi.beans.Masterpieceproperty;
+
+import org.goobi.beans.GoobiProperty;
+
 import org.goobi.beans.Process;
-import org.goobi.beans.Processproperty;
 import ugh.dl.DigitalDocument;
 import ugh.exceptions.PreferencesException;
 import ugh.exceptions.ReadException;
@@ -64,20 +64,12 @@ public class OcrSelectorApi {
     public SavedData getSavedData(@PathParam("processid") int processid) throws ReadException, SwapException, IOException, PreferencesException, DAOException, TypeNotAllowedForParentException {
         Process p = ProcessManager.getProcessById(processid);
         String defaultValue = null;
-        for (Processproperty prop : p.getEigenschaften()) {
-            if (prop.getTitel().equalsIgnoreCase("schrifttyp")) {
-                defaultValue = prop.getWert();
+        for (GoobiProperty prop : p.getEigenschaften()) {
+            if (prop.getPropertyName().equalsIgnoreCase("schrifttyp")) {
+                defaultValue = prop.getPropertyValue();
             }
         }
-        if (defaultValue == null) {
-            for (Masterpiece masterpiece : p.getWerkstuecke()) {
-                for (Masterpieceproperty property : masterpiece.getEigenschaften()) {
-                    if (property.getTitel().equalsIgnoreCase("schrifttyp")) {
-                        defaultValue = property.getWert();
-                    }
-                }
-            }
-        }
+       
         SavedData data = new SavedData();
         data.setDefaultValue(defaultValue);
         java.nio.file.Path savedFile = Paths.get(p.getProcessDataDirectory()).resolve("ocrPages.json");
