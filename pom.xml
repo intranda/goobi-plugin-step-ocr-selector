@@ -9,7 +9,6 @@
   </parent>
   <groupId>io.goobi.workflow.plugin</groupId>
   <artifactId>plugin-step-ocr-selector</artifactId>
-  <version>25.05-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>module-api</module>
