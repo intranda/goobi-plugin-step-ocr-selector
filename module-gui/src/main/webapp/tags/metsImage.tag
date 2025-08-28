@@ -1,7 +1,7 @@
 <metsImage>
 	<div class="mets-image__wrapper {opts.metsimage.selected ? '' : ''}" id="{opts.metsimage.identifier}">
 	    <div class="mets-image__preloader" if={preloader}></div>
-	    
+
 	    <div class="mets-image__image" style="width:{width}px; height:{height}px;">
 	    	<img ref="image" oncontextmenu={onDsContext} src={src} />
 		    <div if={opts.metsimage.selected} class="selected" onclick={imageClick} oncontextmenu={onDsContext}></div>
@@ -18,16 +18,16 @@
    		this.tooltip = null;
    		this.tooltipLeft = 0;
 		const goobi_path = location.pathname.split('/')[1];
-    
+
     	this.on('mount', function() {
     		this.fetchDimensions();
-    		
+
     		this.refs.image.onload = function() {
         		this.preloader = false;
         		this.update();
     		}.bind(this);
     	}.bind(this));
-    	
+
     	fetchDimensions() {
     	    let imageName = this.getImageName(this.opts.metsimage.location);
     	    let processId = this.opts.processid;
@@ -41,29 +41,29 @@
     	        });
     	    })
     	}
-    	
+
     	getImageName(location) {
     	    let lastSlash = Math.max(location.lastIndexOf("/"), location.lastIndexOf("\\"));
     	    return location.substring(lastSlash+1);
     	}
-    	
+
     	getImageUrl(location, width, height) {
     	    let imageName = this.getImageName(location);
     	    let processId = this.opts.processid;
     	    return `/${goobi_path}/api/process/image/${processId}/media/${imageName}/full/!${height},${width}/0/default.jpg`;
     	}
-    	
+
     	createObserver() {
     		var observer;
     		var options = {
     		    rootMargin: "1200px 0px 1200px 0px",
     		    threshold: 0.9
     		};
-    		
+
     		observer = new IntersectionObserver(this.loadImages, options);
     		observer.observe(this.refs.image);
     	}
-    	
+
     	onDsContext(e) {
     	    e.preventDefault();
 		    e.stopPropagation();
@@ -72,7 +72,7 @@
 		    }
     		this.opts.observer.trigger("openMenu", e, this.opts.metsimage);
     	}
-    	
+
     	loadImages(entries, observer) {
     		entries.forEach( entry => {
     			if (entry.isIntersecting && !this.src) {

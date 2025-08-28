@@ -93,7 +93,7 @@
 		this.on("mount", () => {
 			console.log("AAA", this.generalOpts)
 		    $.ajax( {
-			        url: "/${goobi_path}/api/plugins/ocrselector/" + this.generalOpts.processId + "/dd",
+			        url: `/${goobi_path}/api/plugins/ocrselector/` + this.generalOpts.processId + "/dd",
 			        type: "GET",
 			        datatype: "JSON"
 			    }).then(function(data) {
@@ -117,7 +117,7 @@
 
 		getSavedData() {
 		    $.ajax( {
-		        url: "/${goobi_path}/api/plugins/ocrselector/" + this.generalOpts.processId + "/saved",
+		        url:  `/${goobi_path}/api/plugins/ocrselector/` + this.generalOpts.processId + "/saved",
 			        type: "GET",
 			        datatype: "JSON"
 		    }).then(function(data) {
@@ -171,7 +171,7 @@
 				saveData[name] = image.label;
 			}
 			return $.ajax({
-				url: "/${goobi_path}/api/plugins/ocrselector/" + this.generalOpts.processId + "/results",
+				url: `/${goobi_path}/api/plugins/ocrselector/` + this.generalOpts.processId + "/results",
 				type:"POST",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(saveData)
