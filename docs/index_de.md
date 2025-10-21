@@ -3,6 +3,10 @@ title: OCR Seitenauswahl
 identifier: intranda_step_ocrselector
 published: true
 description: Dies ist die technische Dokumentation für das Goobi-Plugin zur Auswahl von Einzelseiten zur OCR-Durchführung oder nicht-Durchführung.
+keywords:
+    - Goobi workflow
+    - Plugin
+    - Step Plugin
 ---
 ## Einführung
 Die vorliegende Dokumentation beschreibt die Installation, Konfiguration und den Einsatz eines Plugins zur Seitenauswahl für eine nachgelagerte OCR Durchführung. Mit diesem Plugin kann auf Einzelseiten-Basis festgelegt werden, welche Bilder aus einem Vorgang mit welchem Schrifttyp zur OCR gesendet werden. ​
