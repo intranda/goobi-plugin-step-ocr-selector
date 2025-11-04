@@ -3,6 +3,10 @@ title: OCR page selection
 identifier: intranda_step_ocrselector
 published: true
 description: This is the technical documentation for the Goobi plugin for selecting single pages for OCR execution or non-execution.
+keywords:
+    - Goobi workflow
+    - Plugin
+    - Step Plugin
 ---
 ## Introduction
 This documentation describes the installation, configuration and use of a page selection plugin for downstream OCR processing. This plugin can be used to determine on a single-page basis which images from a process are sent to OCR with which font. ​
