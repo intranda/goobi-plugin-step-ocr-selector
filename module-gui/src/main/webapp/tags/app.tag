@@ -5,7 +5,9 @@
 				<h2>
 					<span
 						aria-hidden="true"
-						class="fa fa-puzzle-piece" />
+						class="icon-wrapper">
+						<svg><use href="{GoobiIcons.iconHref('puzzle')}" /></svg>
+					</span>
 					{msg('plugin_intranda_step_ocrselector')}
 				</h2>
 				<div class="actions d-flex">
@@ -16,7 +18,9 @@
 						data-bs-toggle="tooltip">
 						<span
 							aria-hidden="true"
-							class="fa fa-close" />
+							class="icon-wrapper">
+							<svg><use href="{GoobiIcons.iconHref('x')}" /></svg>
+						</span>
 					</a>
 					<a
 						class="btn d-flex align-items-center btn--title-action"
@@ -25,7 +29,9 @@
 						data-bs-toggle="tooltip">
 						<span
 							aria-hidden="true"
-							class="fa fa-save" />
+							class="icon-wrapper">
+							<svg><use href="{GoobiIcons.iconHref('device-floppy')}" /></svg>
+						</span>
 					</a>
 					<a
 						class="btn d-flex align-items-center btn--title-action"
@@ -34,7 +40,9 @@
 						data-bs-toggle="tooltip">
 						<span
 							aria-hidden="true"
-							class="fa fa-check" />
+							class="icon-wrapper">
+							<svg><use href="{GoobiIcons.iconHref('check')}" /></svg>
+						</span>
 					</a>
 				</div>
 			</div>
